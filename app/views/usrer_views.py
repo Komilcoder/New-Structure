@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
-from app.schemas.user_schema import UserCreate, UserRead, UserUpdate
+from app.schemas.user import UserCreate
 from app.services.user_service import UserService
 from app.repository.user_repository import UserRepository
 from app.database import get_db
@@ -25,10 +25,3 @@ class UserView:
 
   
 
-user_view = UserView()
-
-router.post("/", response_model=UserRead, status_code=status.HTTP_201_CREATED)(user_view.create_user)
-router.get("/", response_model=List[UserRead])(user_view.get_users)
-router.get("/{user_id}", response_model=UserRead)(user_view.get_user)
-router.put("/{user_id}", response_model=UserRead)(user_view.update_user)
-router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)(user_view.delete_user)
